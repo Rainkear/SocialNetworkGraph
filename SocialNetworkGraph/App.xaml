@@ -1,10 +1,4 @@
 ﻿<Application x:Class="SocialNetworkGraph.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SocialNetworkGraph"
-             StartupUri="View/MainWindow.xaml">
-    <Application.Resources>
-        <local:MainWindowViewModel x:Key="MainViewModel"/>
-        <local:MainGraphLayout x:Key="MainGraphLayout"/>
-    </Application.Resources>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 </Application>

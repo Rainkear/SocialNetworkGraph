@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SocialNetworkGraph
+namespace SocialNetworkGraph.Models
 {
-    public class Sex
+    public class Locality
     {
         public virtual int Id { get; protected set; }
         public virtual string Name { get; set; }

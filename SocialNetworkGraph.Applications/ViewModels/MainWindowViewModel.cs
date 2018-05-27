@@ -2,6 +2,8 @@
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using QuickGraph;
+using SocialNetworkGraph.Commands;
+using SocialNetworkGraph.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,11 +13,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace SocialNetworkGraph
+namespace SocialNetworkGraph.ViewModels
 {
-    class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : BaseViewModel
     {
         private DbUtils dbUtils;
+
+        public event EventHandler<PersonWindowViewModel> DisplayPersonWindow;
 
         private BidirectionalGraph<object, IEdge<object>> _graph;
         public BidirectionalGraph<object, IEdge<object>> Graph
@@ -52,9 +56,7 @@ namespace SocialNetworkGraph
 
         public void ShowInfo(object param)
         {
-            PersonWindow personWindow = new PersonWindow();
-            personWindow.DataContext = new PersonWindowViewModel(dbUtils.GetPersonById((int)param));
-            personWindow.Show();   
+            DisplayPersonWindow(this, new PersonWindowViewModel(dbUtils.GetPersonById((int)param)));
         }
 
         public MainWindowViewModel()
@@ -72,13 +74,6 @@ namespace SocialNetworkGraph
                 x.Value.Where(y => x.Key < y).Select(y => new Edge<object>(x.Key, y)).ToList()
             ).SelectMany(l => l).ToList());
             CanExecute = true;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged(string info)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
     }
 }

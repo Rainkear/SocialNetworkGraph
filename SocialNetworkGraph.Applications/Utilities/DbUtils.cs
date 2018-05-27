@@ -2,13 +2,15 @@
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Linq;
+using SocialNetworkGraph.Models;
+using SocialNetworkGraph.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SocialNetworkGraph
+namespace SocialNetworkGraph.Utilities
 {
     class DbUtils
     {

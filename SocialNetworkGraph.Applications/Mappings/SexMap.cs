@@ -1,15 +1,16 @@
 ﻿using FluentNHibernate.Mapping;
+using SocialNetworkGraph.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SocialNetworkGraph
+namespace SocialNetworkGraph.Mappings
 {
-    public class LocalityMap : ClassMap<Locality>
+    public class SexMap : ClassMap<Sex>
     {
-        public LocalityMap()
+        public SexMap()
         {
             Id(x => x.Id);
             Map(x => x.Name);

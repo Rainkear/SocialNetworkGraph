@@ -1,13 +1,14 @@
-﻿using System;
+﻿using SocialNetworkGraph.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SocialNetworkGraph
+namespace SocialNetworkGraph.ViewModels
 {
-    class PersonWindowViewModel : INotifyPropertyChanged
+    public class PersonWindowViewModel : BaseViewModel
     {
         private Person _person;
 
@@ -154,13 +155,6 @@ namespace SocialNetworkGraph
             BirthPlace = person.BirthPlace.Name;
             Sex = person.Sex.Name;
             Phone = person.Phone;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged(string info)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
     }
 }

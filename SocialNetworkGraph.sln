@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetworkGraph", "SocialNetworkGraph\SocialNetworkGraph.csproj", "{C0511E0E-AFAD-4381-8A1A-F8804355E415}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetworkGraph.Presentation", "SocialNetworkGraph\SocialNetworkGraph.Presentation.csproj", "{C0511E0E-AFAD-4381-8A1A-F8804355E415}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetworkGraph.Applications", "SocialNetworkGraph.Applications\SocialNetworkGraph.Applications.csproj", "{238F7ABD-15D9-4D1E-911D-4D2E68EFCECA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C0511E0E-AFAD-4381-8A1A-F8804355E415}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0511E0E-AFAD-4381-8A1A-F8804355E415}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0511E0E-AFAD-4381-8A1A-F8804355E415}.Release|Any CPU.Build.0 = Release|Any CPU
+		{238F7ABD-15D9-4D1E-911D-4D2E68EFCECA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{238F7ABD-15D9-4D1E-911D-4D2E68EFCECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{238F7ABD-15D9-4D1E-911D-4D2E68EFCECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{238F7ABD-15D9-4D1E-911D-4D2E68EFCECA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

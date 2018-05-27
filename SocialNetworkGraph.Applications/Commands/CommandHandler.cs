@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace SocialNetworkGraph
+namespace SocialNetworkGraph.Commands
 {
-    class CommandHandler : ICommand 
+    public class CommandHandler : ICommand 
     {
         private Action<object> _action;
         private bool _canExecute;
