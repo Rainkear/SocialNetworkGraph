@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:SocialNetworkGraph"
         mc:Ignorable="d"
         Title="{Binding ID, StringFormat='ID: {0}'}" Height="Auto"  Width="Auto"
+        MinHeight="300" MinWidth="300"
         SizeToContent="WidthAndHeight" ResizeMode="NoResize" ShowInTaskbar="False">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="1" Orientation="Vertical">
+        <StackPanel Grid.Column="0" Orientation="Vertical">
             <TextBlock Margin="10" TextWrapping="Wrap" Text="{Binding Name, StringFormat='ФИО: {0}'}"/>
             <TextBlock Margin="10" TextWrapping="Wrap" Text="{Binding BirthDate, StringFormat='Дата рождения: {0:dd-MM-yyyy}'}"/>
             <TextBlock Margin="10" TextWrapping="Wrap" Text="{Binding Sex, StringFormat='Пол: {0}'}"/>
@@ -21,7 +21,7 @@
             <TextBlock Margin="10" TextWrapping="Wrap" Text="{Binding LivePlace, StringFormat='Место проживания: {0}'}"/>
             <TextBlock Margin="10" TextWrapping="Wrap" Text="{Binding Phone, StringFormat='Телефон: {0}'}"/>
         </StackPanel>
-        <StackPanel Grid.Column="2" Orientation="Vertical">
+        <StackPanel Grid.Column="1" Orientation="Vertical">
             <TextBlock Margin="5">Хобби:</TextBlock>
             <ListBox Margin = "5" 
                      ItemsSource="{Binding Hobby}" 

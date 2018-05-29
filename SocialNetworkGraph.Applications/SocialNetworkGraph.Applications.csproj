@@ -35,14 +35,6 @@
       <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="GraphSharp, Version=1.0.2.0, Culture=neutral, PublicKeyToken=f9c24778325a6b82, processorArchitecture=MSIL">
-      <HintPath>..\packages\GraphSharp.1.1.0.0\lib\net40\GraphSharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="GraphSharp.Controls, Version=1.1.0.0, Culture=neutral, PublicKeyToken=f9c24778325a6b82, processorArchitecture=MSIL">
-      <HintPath>..\packages\GraphSharp.1.1.0.0\lib\net40\GraphSharp.Controls.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
       <Private>True</Private>
@@ -76,18 +68,14 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WPFExtensions, Version=1.0.3437.34043, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WPFExtensions.1.0.0\lib\WPFExtensions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Commands\CommandHandler.cs" />
     <Compile Include="Mappings\HobbyMap.cs" />
     <Compile Include="Mappings\LocalityMap.cs" />
     <Compile Include="Mappings\PersonMap.cs" />
     <Compile Include="Mappings\SexMap.cs" />
+    <Compile Include="Models\Vertex.cs" />
     <Compile Include="Utilities\DbUtils.cs" />
     <Compile Include="Models\Hobby.cs" />
     <Compile Include="Models\Locality.cs" />
@@ -99,7 +87,9 @@
     <Compile Include="ViewModels\PersonWindowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

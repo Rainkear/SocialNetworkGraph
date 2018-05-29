@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using SocialNetworkGraph.ViewModels;
+using System.ComponentModel;
 
 namespace SocialNetworkGraph
 {
@@ -15,15 +11,17 @@ namespace SocialNetworkGraph
     /// </summary>
     public partial class App : Application
     {
+        private MainWindow _view;
         protected override void OnStartup(StartupEventArgs e)
         {
             try
             {
-                var view = new MainWindow();
-                view.Show();
-                var vm = new MainWindowViewModel();
-                vm.DisplayPersonWindow += Vm_DisplayPersonWindow;
-                view.DataContext = vm;
+                _view = new MainWindow();
+                _view.Show();
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += worker_DoWork;
+                worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+                worker.RunWorkerAsync();
             }
             catch (Exception ex)
             {
@@ -31,12 +29,23 @@ namespace SocialNetworkGraph
             }
         }
 
+
+        void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            e.Result = new MainWindowViewModel();
+        }
+
+        void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            (e.Result as MainWindowViewModel).DisplayPersonWindow += Vm_DisplayPersonWindow;
+            _view.DataContext = (e.Result as MainWindowViewModel);
+        }
+
         private void Vm_DisplayPersonWindow(object sender, PersonWindowViewModel e)
         {
             var personView = new PersonWindow();
             personView.DataContext = e;
             personView.Show();
-
         }
     }
 }

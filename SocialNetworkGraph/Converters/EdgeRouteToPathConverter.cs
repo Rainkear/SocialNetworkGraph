@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace SocialNetworkGraph
+namespace SocialNetworkGraph.Converters
 {
     public class EdgeRouteToPathConverter : IMultiValueConverter
     {
         /// <summary>
-        /// Find attach point on ource object 
+        /// Find attach point on our object 
         /// </summary>
         /// <param name="s">Source</param>
         /// <param name="sourceSize">Source size</param>

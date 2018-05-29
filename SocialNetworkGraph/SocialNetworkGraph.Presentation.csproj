@@ -36,24 +36,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentNHibernate, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="GraphSharp, Version=1.0.2.0, Culture=neutral, PublicKeyToken=f9c24778325a6b82, processorArchitecture=MSIL">
       <HintPath>..\packages\GraphSharp.1.1.0.0\lib\net40\GraphSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="GraphSharp.Controls, Version=1.1.0.0, Culture=neutral, PublicKeyToken=f9c24778325a6b82, processorArchitecture=MSIL">
       <HintPath>..\packages\GraphSharp.1.1.0.0\lib\net40\GraphSharp.Controls.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NHibernate, Version=4.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHibernate.4.1.2.4000\lib\net40\NHibernate.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="QuickGraph, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
@@ -109,6 +97,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converters\BooleanToVisibleConverter.cs" />
     <Compile Include="Converters\EdgeRouteToPathConverter.cs" />
     <Compile Include="Views\PersonWindow.xaml.cs">
       <DependentUpon>PersonWindow.xaml</DependentUpon>
@@ -151,6 +140,11 @@
       <Project>{238f7abd-15d9-4d1e-911d-4d2e68efceca}</Project>
       <Name>SocialNetworkGraph.Applications</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\arrows.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

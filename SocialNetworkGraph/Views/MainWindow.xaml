@@ -6,22 +6,21 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions" 
         xmlns:local="clr-namespace:SocialNetworkGraph"
+        xmlns:converters="clr-namespace:SocialNetworkGraph.Converters"
         xmlns:graphsharp="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
         mc:Ignorable="d"
         x:Name="root"
         Title="Social Network Graph" 
         MinHeight="600" MinWidth="800"
-        Height="600" Width="800">
-    <zoom:ZoomControl  Grid.Row="1"  Zoom="1" 
-            ZoomBoxOpacity="0.5" Background="#ff656565">
-        <graphsharp:GraphLayout 
-                x:Name="graphLayout" Margin="10"
-                Graph="{Binding ElementName=root, Path=DataContext.Graph}"
-                LayoutAlgorithmType="LinLog" 
-                OverlapRemovalAlgorithmType="FSA"
-                HighlightAlgorithmType="Simple" />
-    </zoom:ZoomControl>
+        Height="600" Width="800" ResizeMode="CanResizeWithGrip">
     <Window.Resources>
+        <converters:EdgeRouteToPathConverter x:Key="routeToPathConverter" />
+        <converters:BooleanToVisibleConverter x:Key="boolToVis"/>
+        
+        <DataTemplate x:Key="toolTipTemplate">
+            <TextBlock Text="{Binding Name}"/>
+        </DataTemplate>
+        
         <Style TargetType="{x:Type graphsharp:VertexControl}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -29,6 +28,9 @@
                         <Grid
                           MinWidth="20"
                           MinHeight="20">
+                            <Grid.ToolTip>
+                                <ContentPresenter Content="{TemplateBinding Vertex}" ContentTemplate="{StaticResource toolTipTemplate}"/>
+                            </Grid.ToolTip>
                             <Grid.InputBindings>
                                 <MouseBinding Gesture="LeftClick" 
                                               CommandParameter="{Binding Vertex, RelativeSource={RelativeSource AncestorType={x:Type  graphsharp:VertexControl}}}"
@@ -45,8 +47,6 @@
             </Setter>
             <Setter Property="Panel.ZIndex" Value="2"/>
         </Style>
-
-        <local:EdgeRouteToPathConverter x:Key="routeToPathConverter" />
 
         <Style TargetType="{x:Type graphsharp:EdgeControl}">
 
@@ -102,4 +102,55 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" Grid.ZIndex="2" 
+                   Visibility="{Binding ElementName=root, Path=DataContext.Loaded, Converter={StaticResource boolToVis}, TargetNullValue=Visible}"
+                   Background="White">
+            <Image x:Name="image" Source="/Media/arrows.png" 
+                    MaxWidth="250" MaxHeight="250" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <RotateTransform x:Name="TransRotate" CenterX="0" CenterY="0" Angle="0" />
+                </Image.RenderTransform>
+                <Image.Triggers>
+                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation x:Name="da" 
+                                        Storyboard.TargetName="TransRotate" 
+                                        Storyboard.TargetProperty="Angle"
+                                        From="0"
+                                        To="360"
+                                        Duration="0:0:3"  
+                                        AutoReverse="False" 
+                                        RepeatBehavior="Forever" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                </Image.Triggers>
+            </Image>
+        </DockPanel>
+        <zoom:ZoomControl  Grid.Row="0" Grid.ZIndex="1"  Zoom="1" 
+            ZoomBoxOpacity="0.5" Background="#ff656565">
+            <graphsharp:GraphLayout 
+                    x:Name="graphLayout" Margin="10"
+                    Graph="{Binding ElementName=root, Path=DataContext.Graph}"
+                    LayoutAlgorithmType="LinLog" 
+                    OverlapRemovalAlgorithmType="FSA"
+                    HighlightAlgorithmType="Simple" />
+        </zoom:ZoomControl>
+        <StatusBar Name="sbar" Grid.Row="1" Grid.ColumnSpan="2" 
+           VerticalAlignment="Bottom" Background="White" >
+            <StatusBarItem>
+                <TextBlock Text="{Binding ElementName=root, Path=DataContext.ErrorMessage}" Foreground="Red"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+
+    
 </Window>

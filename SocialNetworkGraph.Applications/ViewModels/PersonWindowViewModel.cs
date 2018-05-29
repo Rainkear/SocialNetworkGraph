@@ -1,10 +1,7 @@
 ﻿using SocialNetworkGraph.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SocialNetworkGraph.ViewModels
 {
@@ -148,7 +145,7 @@ namespace SocialNetworkGraph.ViewModels
                 person.FirstName, person.FatherName);
             Hobby = person.Hobbies.Select(x => x.Name).ToList();
             Friends = person.LFriends.Select(p =>
-                    string.Format("{0} {1}. {2}.", p.LastName, p.FirstName[0], p.FatherName[0]))
+                    string.Format("{0} {1}.{2}.", p.LastName, p.FirstName[0], p.FatherName[0]))
                 .ToList();
             BirthDate = person.BirthDate;
             LivePlace = person.LivePlace.Name;

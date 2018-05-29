@@ -7,8 +7,6 @@ using SocialNetworkGraph.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SocialNetworkGraph.Utilities
 {
@@ -23,15 +21,23 @@ namespace SocialNetworkGraph.Utilities
         /// Get ids of all persons and their friends
         /// </summary>
         /// <returns>Dictionary of (Person id, List of friends ids)</returns>
-        public Dictionary<int, List<int>> GetAllPersonsIds()
+        public Dictionary<Vertex, List<Vertex>> GetAllPersonsIds()
         {
-            using (var session = sessionFactory.OpenSession())
+
+            try
             {
-                return session.Query<Person>()
-                    .ToDictionary(x => x.Id, x => x.LFriends
-                          .Select(y => y.Id)
-                          .ToList()
-                     );
+                using (var session = sessionFactory.OpenSession())
+                {
+                    return session.Query<Person>()
+                        .ToDictionary(x => new Vertex(x.Id, x.LastName, x.FirstName, x.FatherName), x => x.LFriends
+                              .Select(y => new Vertex(y.Id, y.LastName, y.FirstName, y.FatherName))
+                              .ToList()
+                         );
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Get persons list error: " + ex.Message);
             }
         }
 
@@ -63,15 +69,22 @@ namespace SocialNetworkGraph.Utilities
         /// </summary>
         private void CreateSessionFactory()
         {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["localSql"].ConnectionString;
-            sessionFactory = Fluently.Configure()
-              .Database(
-                MsSqlConfiguration.MsSql2012
-                  .ConnectionString(connectionString)
-              )
-              .Mappings(m =>
-                  m.FluentMappings.AddFromAssemblyOf<MainWindowViewModel>())
-              .BuildSessionFactory();
+            try
+            {
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["localSql"].ConnectionString;
+                sessionFactory = Fluently.Configure()
+                  .Database(
+                    MsSqlConfiguration.MsSql2012
+                      .ConnectionString(connectionString)
+                  )
+                  .Mappings(m =>
+                      m.FluentMappings.AddFromAssemblyOf<MainWindowViewModel>())
+                  .BuildSessionFactory();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Session factory exception: " + ex.Message);
+            }
         }
     }
 }

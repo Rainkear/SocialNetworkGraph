@@ -1,17 +1,10 @@
-﻿using FluentNHibernate.Cfg;
-using FluentNHibernate.Cfg.Db;
-using NHibernate;
-using QuickGraph;
+﻿using QuickGraph;
 using SocialNetworkGraph.Commands;
+using SocialNetworkGraph.Models;
 using SocialNetworkGraph.Utilities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 
 namespace SocialNetworkGraph.ViewModels
 {
@@ -21,14 +14,44 @@ namespace SocialNetworkGraph.ViewModels
 
         public event EventHandler<PersonWindowViewModel> DisplayPersonWindow;
 
+        private bool _loaded;
+        public bool Loaded
+        {
+            get
+            {
+                return _loaded;
+            }
+
+            set
+            {
+                NotifyPropertyChanged("Loaded");
+                _loaded = value;
+            }
+        }
+
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMessage;
+            }
+
+            set
+            {
+                NotifyPropertyChanged("ErrorMessage");
+                _errorMessage = value;
+            }
+        }
+
         private BidirectionalGraph<object, IEdge<object>> _graph;
         public BidirectionalGraph<object, IEdge<object>> Graph
         {
             get { return _graph; }
             set
             {
-                _graph = value;
                 NotifyPropertyChanged("Graph");
+                _graph = value;
             }
         }
 
@@ -50,13 +73,14 @@ namespace SocialNetworkGraph.ViewModels
             }
             set
             {
+                NotifyPropertyChanged("CanExecute");
                 _canExecute = value;
             }
         }
 
         public void ShowInfo(object param)
         {
-            DisplayPersonWindow(this, new PersonWindowViewModel(dbUtils.GetPersonById((int)param)));
+            DisplayPersonWindow(this, new PersonWindowViewModel(dbUtils.GetPersonById(((Vertex)param).Id)));
         }
 
         public MainWindowViewModel()
@@ -66,14 +90,22 @@ namespace SocialNetworkGraph.ViewModels
 
         public void ConstructGraph()
         {
-            dbUtils = new DbUtils();
+            try
+            {
+                dbUtils = new DbUtils();
+                var personIdDict = dbUtils.GetAllPersonsIds(); //key - person id, value - list of friends
+                Graph = new BidirectionalGraph<object, IEdge<object>>(false);
+                Graph.AddVerticesAndEdgeRange(personIdDict.Select(x =>
+                    x.Value.Where(y => x.Key.Id < y.Id).Select(y => new Edge<object>(x.Key, y)).ToList()
+                ).SelectMany(l => l).ToList());
+                CanExecute = true;
+                Loaded = true;
 
-            var personIdDict = dbUtils.GetAllPersonsIds(); //key - person id, value - list of friends
-            Graph = new BidirectionalGraph<object, IEdge<object>>(false);
-            Graph.AddVerticesAndEdgeRange(personIdDict.Select(x =>
-                x.Value.Where(y => x.Key < y).Select(y => new Edge<object>(x.Key, y)).ToList()
-            ).SelectMany(l => l).ToList());
-            CanExecute = true;
+            }
+            catch(Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
     }
 }
