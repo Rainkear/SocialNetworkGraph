@@ -3,14 +3,13 @@ using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Linq;
 using SocialNetworkGraph.Models;
-using SocialNetworkGraph.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SocialNetworkGraph.Utilities
 {
-    class DbUtils
+    public class DbUtils
     {
         public DbUtils()
         {
@@ -78,7 +77,7 @@ namespace SocialNetworkGraph.Utilities
                       .ConnectionString(connectionString)
                   )
                   .Mappings(m =>
-                      m.FluentMappings.AddFromAssemblyOf<MainWindowViewModel>())
+                      m.FluentMappings.AddFromAssemblyOf<DbUtils>())
                   .BuildSessionFactory();
             }
             catch (Exception ex)

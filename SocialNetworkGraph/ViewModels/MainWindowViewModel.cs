@@ -3,7 +3,6 @@ using SocialNetworkGraph.Commands;
 using SocialNetworkGraph.Models;
 using SocialNetworkGraph.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace SocialNetworkGraph.ViewModels
@@ -104,6 +103,7 @@ namespace SocialNetworkGraph.ViewModels
             }
             catch(Exception ex)
             {
+                ExceptionLogger.Instance.LogFile(ex.Message);
                 ErrorMessage = ex.Message;
             }
         }

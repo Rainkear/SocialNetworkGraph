@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SocialNetworkGraph.Models
 {
-    class Vertex
+    public class Vertex
     {
         private int _id;
         public int Id

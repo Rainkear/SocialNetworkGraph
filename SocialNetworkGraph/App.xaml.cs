@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows;
 using SocialNetworkGraph.ViewModels;
 using System.ComponentModel;
+using SocialNetworkGraph.Utilities;
 
 namespace SocialNetworkGraph
 {
@@ -25,10 +26,10 @@ namespace SocialNetworkGraph
             }
             catch (Exception ex)
             {
+                ExceptionLogger.Instance.LogFile(ex.Message);
                 Debug.WriteLine(ex);
             }
         }
-
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
         {

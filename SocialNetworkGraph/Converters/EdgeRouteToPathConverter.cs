@@ -62,8 +62,8 @@ namespace SocialNetworkGraph.Converters
             Point[] routeInformation = (values[8] != DependencyProperty.UnsetValue ? (Point[])values[8] : null);
             bool hasRouteInfo = routeInformation != null && routeInformation.Length > 0;
 
-            Point p1 = CalculateAttachPoint(sourcePos, sourceSize, (hasRouteInfo ? routeInformation[0] : targetPos));
-            Point p2 = CalculateAttachPoint(targetPos, targetSize, (hasRouteInfo ? routeInformation[routeInformation.Length - 1] : sourcePos));
+            Point p1 = sourcePos; // CalculateAttachPoint(sourcePos, sourceSize, (hasRouteInfo ? routeInformation[0] : targetPos));
+            Point p2 = targetPos; // CalculateAttachPoint(targetPos, targetSize, (hasRouteInfo ? routeInformation[routeInformation.Length - 1] : sourcePos));
 
             //prevent error edges drawing
             if (double.IsNaN(sourcePos.X) || double.IsNaN(sourcePos.Y))
@@ -73,8 +73,6 @@ namespace SocialNetworkGraph.Converters
             if (hasRouteInfo)
                 for (int i = 0; i < routeInformation.Length; i++)
                     segments[i] = new LineSegment(routeInformation[i], true);
-
-            Point pLast = (hasRouteInfo ? routeInformation[routeInformation.Length - 1] : p1);
 
             segments[segments.Length - 1] = new LineSegment(p2, true);
 

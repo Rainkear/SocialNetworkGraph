@@ -99,6 +99,9 @@
     </Compile>
     <Compile Include="Converters\BooleanToVisibleConverter.cs" />
     <Compile Include="Converters\EdgeRouteToPathConverter.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\PersonWindowViewModel.cs" />
     <Compile Include="Views\PersonWindow.xaml.cs">
       <DependentUpon>PersonWindow.xaml</DependentUpon>
     </Compile>
@@ -136,15 +139,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SocialNetworkGraph.Applications\SocialNetworkGraph.Applications.csproj">
-      <Project>{238f7abd-15d9-4d1e-911d-4d2e68efceca}</Project>
-      <Name>SocialNetworkGraph.Applications</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Media\arrows.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SocialNetworkGraph.Applications\SocialNetworkGraph.Data.csproj">
+      <Project>{238f7abd-15d9-4d1e-911d-4d2e68efceca}</Project>
+      <Name>SocialNetworkGraph.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

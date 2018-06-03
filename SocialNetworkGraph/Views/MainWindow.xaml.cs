@@ -10,7 +10,8 @@ namespace SocialNetworkGraph
         public MainWindow()
         {
             InitializeComponent();
-            
         }
     }
+
+
 }

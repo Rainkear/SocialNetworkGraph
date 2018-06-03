@@ -7,8 +7,8 @@
     <ProjectGuid>{238F7ABD-15D9-4D1E-911D-4D2E68EFCECA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SocialNetworkGraph.Applications</RootNamespace>
-    <AssemblyName>SocialNetworkGraph.Applications</AssemblyName>
+    <RootNamespace>SocialNetworkGraph.Data</RootNamespace>
+    <AssemblyName>SocialNetworkGraph.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -82,9 +82,7 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Sex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\PersonWindowViewModel.cs" />
+    <Compile Include="Utilities\ExceptionLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

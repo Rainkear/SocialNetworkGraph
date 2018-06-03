@@ -5,6 +5,25 @@ namespace SocialNetworkGraph.Models
 {
     public class Person
     {
+        public Person(int id, string lastName, string firstName, string fatherName, 
+            DateTime birthDate, Sex sex, Locality birthPlace, Locality livePlace, string phone)
+        {
+            Id = id;
+            LastName = lastName;
+            FirstName = firstName;
+            FatherName = fatherName;
+            BirthDate = birthDate;
+            Sex = sex;
+            BirthPlace = birthPlace;
+            LivePlace = livePlace;
+            Phone = phone;
+            LFriends = new HashSet<Person>();
+            RFriends = new HashSet<Person>();
+            Hobbies = new HashSet<Hobby>();
+        }
+
+        public Person() { }
+
         public virtual int Id { get; protected set; }
         public virtual string LastName { get; set; }
         public virtual string FirstName { get; set; }

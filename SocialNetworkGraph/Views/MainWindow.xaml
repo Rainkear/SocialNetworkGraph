@@ -3,9 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions" 
-        xmlns:local="clr-namespace:SocialNetworkGraph"
         xmlns:converters="clr-namespace:SocialNetworkGraph.Converters"
         xmlns:graphsharp="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
         mc:Ignorable="d"
@@ -22,6 +20,14 @@
         </DataTemplate>
         
         <Style TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Direction="320" ShadowDepth="3" BlurRadius="5" Opacity="0.5" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="#F5F5F5"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
@@ -36,8 +42,8 @@
                                               CommandParameter="{Binding Vertex, RelativeSource={RelativeSource AncestorType={x:Type  graphsharp:VertexControl}}}"
                                               Command="{Binding ElementName=root, Path=DataContext.VertexClickCommand}"/>
                             </Grid.InputBindings>
-                            <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="3">
-                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Border Background="#448AFF" BorderThickness="0" CornerRadius="2">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0">
                                     <ContentPresenter Name="conpres" Content="{TemplateBinding Vertex}"/>
                                 </StackPanel>
                             </Border>
@@ -49,7 +55,7 @@
         </Style>
 
         <Style TargetType="{x:Type graphsharp:EdgeControl}">
-
+            <Setter Property="Foreground" Value="#999999"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type graphsharp:EdgeControl}">
@@ -92,16 +98,28 @@
             <Style.Triggers>
                 <Trigger Property="graphsharp:GraphElementBehaviour.IsHighlighted"
                      Value="True">
-                    <Setter Property="Foreground" Value="Blue"/>
+                    <Setter Property="Foreground" Value="#448AFF"/>
+                    <Setter Property="Panel.ZIndex" Value="2"/>
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect Color="Black" Direction="320" ShadowDepth="3" BlurRadius="5" Opacity="0.5" />
+                        </Setter.Value>
+                    </Setter>
                 </Trigger>
                 <Trigger Property="graphsharp:GraphElementBehaviour.IsSemiHighlighted"
                                Value="True">
-                    <Setter Property="Foreground" Value="Blue"/>
-                    <Setter Property="Panel.ZIndex" Value="1"/>
+                    <Setter Property="Foreground" Value="#448AFF"/>
+                    <Setter Property="Panel.ZIndex" Value="2"/>
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect Color="Black" Direction="320" ShadowDepth="2" BlurRadius="4" Opacity="0.5" />
+                        </Setter.Value>
+                    </Setter>
                 </Trigger>
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -136,7 +154,7 @@
             </Image>
         </DockPanel>
         <zoom:ZoomControl  Grid.Row="0" Grid.ZIndex="1"  Zoom="1" 
-            ZoomBoxOpacity="0.5" Background="#ff656565">
+            ZoomBoxOpacity="0.5" Background="LightGray">
             <graphsharp:GraphLayout 
                     x:Name="graphLayout" Margin="10"
                     Graph="{Binding ElementName=root, Path=DataContext.Graph}"
@@ -151,6 +169,4 @@
             </StatusBarItem>
         </StatusBar>
     </Grid>
-
-    
 </Window>
