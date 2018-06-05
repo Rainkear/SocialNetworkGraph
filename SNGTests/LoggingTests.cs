@@ -10,11 +10,10 @@ namespace SNGTests
     public class LoggingTests
     {
         [TestMethod]
-        public void StressTest()
+        public void RandomError()
         {
-            for (int i = 0; i < 1000; i++)
-                ExceptionLogger.Instance.LogFile(i.ToString());
-            Thread.Sleep(7000);
+            Random rnd = new Random();
+            ExceptionLogger.Instance.LogFile(rnd.Next().ToString());
         }
     }
 }

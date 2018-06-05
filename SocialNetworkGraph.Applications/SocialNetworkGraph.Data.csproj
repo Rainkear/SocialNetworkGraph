@@ -70,7 +70,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CommandHandler.cs" />
     <Compile Include="Mappings\HobbyMap.cs" />
     <Compile Include="Mappings\LocalityMap.cs" />
     <Compile Include="Mappings\PersonMap.cs" />

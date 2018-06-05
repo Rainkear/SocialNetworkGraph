@@ -4,13 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        x:Name="root"
         Title="{Binding Name, StringFormat='ФИО: {0}'}" Height="Auto"  Width="Auto"
         MinHeight="100" MinWidth="300"
         SizeToContent="WidthAndHeight" ResizeMode="NoResize" ShowInTaskbar="False" WindowStyle="None"
-        Topmost="True" Background="LightGray">
+        Topmost="True" Background="Transparent" AllowsTransparency="True" >
     <Window.Resources>
         <ControlTemplate x:Key="crossTemplate" TargetType="Button">
-            <DockPanel>
+            <DockPanel Background="Transparent">
                 <Path x:Name="crossPath" Data="M0,0 L10,10 M10,0 L0,10" Stroke="#F5F5F5" Margin="7" StrokeThickness="3" />
             </DockPanel>
             <ControlTemplate.Triggers>
@@ -160,7 +161,10 @@
         
         
     </Window.Resources>
-    <StackPanel>
+    <StackPanel Margin="0,0,3,3">
+        <StackPanel.Effect>
+            <DropShadowEffect Color="Black" Direction="270" ShadowDepth="3" BlurRadius="5" Opacity="0.5"/>
+        </StackPanel.Effect>
         <DockPanel Background="#448AFF" Height="30" Panel.ZIndex="2" MouseLeftButtonDown="DockPanel_MouseLeftButtonDown">
             <DockPanel.Effect>
                 <DropShadowEffect Color="Black" Direction="270" ShadowDepth="3" BlurRadius="5" Opacity="0.5" />
@@ -168,7 +172,8 @@
             <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="12,0" HorizontalAlignment="Left"
                        Foreground="#F5F5F5" FontWeight="DemiBold"/>
             <Button Template="{StaticResource ResourceKey=crossTemplate}"  VerticalAlignment="Center" 
-                    HorizontalAlignment="Right" Click="closeButton_Click" />
+                    HorizontalAlignment="Right" Click="closeButton_Click" 
+                    Command="{Binding ElementName=root, Path=DataContext.CloseCommand}"/>
         </DockPanel>
         <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
             Background="LightGray">

@@ -11,16 +11,10 @@ namespace SocialNetworkGraph.ViewModels
     {
         private DbUtils dbUtils;
 
-        public event EventHandler<PersonWindowViewModel> DisplayPersonWindow;
-
         private bool _loaded;
         public bool Loaded
         {
-            get
-            {
-                return _loaded;
-            }
-
+            get { return _loaded; }
             set
             {
                 NotifyPropertyChanged("Loaded");
@@ -31,11 +25,7 @@ namespace SocialNetworkGraph.ViewModels
         private string _errorMessage;
         public string ErrorMessage
         {
-            get
-            {
-                return _errorMessage;
-            }
-
+            get { return _errorMessage; }
             set
             {
                 NotifyPropertyChanged("ErrorMessage");
@@ -63,13 +53,38 @@ namespace SocialNetworkGraph.ViewModels
             }
         }
 
-        private bool _canExecute;
-        public bool CanExecute
+        private CommandHandler _closeWindowCommand;
+        public CommandHandler CloseWindowCommand
         {
             get
             {
-                return _canExecute;
+                return _closeWindowCommand ?? (_closeWindowCommand = new CommandHandler(param => CloseAll(), CanExecute));
             }
+        }
+
+        private CommandHandler _stateWindowCommand;
+        public CommandHandler StateWindowCommand
+        {
+            get
+            {
+                return _stateWindowCommand ?? (_stateWindowCommand = new CommandHandler(param => StateChangeAll(param), CanExecute));
+            }
+        }
+
+        private void StateChangeAll(object param)
+        {
+            WindowUtils.WindowManager.Instance.ChangeStateAllWindows(param);
+        }
+
+        private void CloseAll()
+        {
+            WindowUtils.WindowManager.Instance.CloseAllWindows();
+        }
+
+        private bool _canExecute;
+        public bool CanExecute
+        {
+            get { return _canExecute; }
             set
             {
                 NotifyPropertyChanged("CanExecute");
@@ -79,7 +94,17 @@ namespace SocialNetworkGraph.ViewModels
 
         public void ShowInfo(object param)
         {
-            DisplayPersonWindow(this, new PersonWindowViewModel(dbUtils.GetPersonById(((Vertex)param).Id)));
+            try
+            {
+                ErrorMessage = string.Empty;
+                WindowUtils.WindowManager.Instance.OpenWindow(
+                    new PersonWindowViewModel(dbUtils.GetPersonById(((Vertex)param).Id)));
+            }
+            catch (Exception ex)
+            {
+                ExceptionLogger.Instance.LogFile(ex.Message);
+                ErrorMessage = ex.Message;
+            }
         }
 
         public MainWindowViewModel()

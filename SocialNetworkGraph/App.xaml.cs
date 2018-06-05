@@ -38,15 +38,7 @@ namespace SocialNetworkGraph
 
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            (e.Result as MainWindowViewModel).DisplayPersonWindow += Vm_DisplayPersonWindow;
             _view.DataContext = (e.Result as MainWindowViewModel);
-        }
-
-        private void Vm_DisplayPersonWindow(object sender, PersonWindowViewModel e)
-        {
-            var personView = new PersonWindow();
-            personView.DataContext = e;
-            personView.Show();
         }
     }
 }

@@ -48,16 +48,23 @@ namespace SocialNetworkGraph.Utilities
         /// <returns>Person object</returns>
         public Person GetPersonById(int id)
         {
-            using (var session = sessionFactory.OpenSession())
+            try
             {
-                return session.QueryOver<Person>()
-                   .Fetch(p => p.Hobbies).Eager
-                   .Fetch(p => p.LFriends).Eager
-                   .Fetch(p=> p.BirthPlace).Eager
-                   .Fetch(p => p.LivePlace).Eager
-                   .Fetch(p => p.Sex).Eager
-                   .Where(p => p.Id == id)
-                   .List().First();
+                using (var session = sessionFactory.OpenSession())
+                {
+                    return session.QueryOver<Person>()
+                       .Fetch(p => p.Hobbies).Eager
+                       .Fetch(p => p.LFriends).Eager
+                       .Fetch(p => p.BirthPlace).Eager
+                       .Fetch(p => p.LivePlace).Eager
+                       .Fetch(p => p.Sex).Eager
+                       .Where(p => p.Id == id)
+                       .List().First();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Get person by id exception: " + ex.Message);
             }
         }
 
@@ -82,7 +89,10 @@ namespace SocialNetworkGraph.Utilities
             }
             catch (Exception ex)
             {
-                throw new Exception("Session factory exception: " + ex.Message);
+                if(ex.InnerException != null)
+                    throw new Exception("Session factory exception: " + ex.Message + "\r\n" + ex.InnerException.Message);
+                else
+                    throw new Exception("Session factory exception: " + ex.Message);
             }
         }
     }

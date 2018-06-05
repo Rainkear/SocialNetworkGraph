@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SocialNetworkGraph.Utilities
@@ -38,8 +35,6 @@ namespace SocialNetworkGraph.Utilities
 
         private static void Writer()
         {
-            try
-            {
                 string directory = Path.Combine(Directory.GetCurrentDirectory(), "Logs\\");
 
                 if (!Directory.Exists(directory))
@@ -48,24 +43,19 @@ namespace SocialNetworkGraph.Utilities
                 foreach (var ex in _exceptions.GetConsumingEnumerable())
                 {
                     string filename = Path.Combine(directory, string.Format("{0:yyyyMMdd}.log", ex.Date));
-                    using (Stream myStream = File.Open(filename, FileMode.OpenOrCreate, FileAccess.Write))
+                    using (Stream stream = File.Open(filename, FileMode.OpenOrCreate, FileAccess.Write))
                     {
-                        StreamWriter myWriter = new StreamWriter(myStream);
-                        myWriter.WriteLine(ex.ToString());
-                        myWriter.Flush();
+                        stream.Position = stream.Length;
+                        StreamWriter writer = new StreamWriter(stream);
+                        writer.WriteLine(ex.ToString());
+                        writer.Flush();
                     }
-                }
-            }
-            catch(Exception ex2)
-            {
-                
-            }
+                }           
         }
 
         public void Dispose()
         {
             _exceptions.CompleteAdding();
-            _writerTask.Dispose();
         }
 
         static ExceptionLogger()

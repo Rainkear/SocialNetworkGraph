@@ -1,4 +1,5 @@
-﻿using SocialNetworkGraph.Models;
+﻿using SocialNetworkGraph.Commands;
+using SocialNetworkGraph.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -137,6 +138,20 @@ namespace SocialNetworkGraph.ViewModels
         private string _phone;
         private List<string> _friends;
 
+        private CommandHandler _closeComand;
+        public CommandHandler CloseCommand
+        {
+            get
+            {
+                return _closeComand ?? (_closeComand = new CommandHandler(param => Close(), true));
+            }
+        }
+
+        private void Close()
+        {
+            WindowUtils.WindowManager.Instance.CloseWindow(this);
+        }
+
         public PersonWindowViewModel(Person person)
         {
             _person = person;
@@ -152,6 +167,18 @@ namespace SocialNetworkGraph.ViewModels
             BirthPlace = person.BirthPlace.Name;
             Sex = person.Sex.Name;
             Phone = person.Phone;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is PersonWindowViewModel)
+                return ID.Equals((obj as PersonWindowViewModel).ID);
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return ID;
         }
     }
 }
