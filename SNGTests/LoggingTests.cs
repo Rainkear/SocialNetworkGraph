@@ -1,8 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SocialNetworkGraph.Utilities;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace SNGTests
 {
