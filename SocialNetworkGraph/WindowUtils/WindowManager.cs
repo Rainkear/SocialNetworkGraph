@@ -1,23 +1,23 @@
 ﻿using SocialNetworkGraph.Utilities;
 using SocialNetworkGraph.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 
 namespace SocialNetworkGraph.WindowUtils
 {
-    class WindowManager
+    public sealed class WindowManager
     {
         private Dictionary<BaseViewModel, Window> _windows;
-        private static readonly WindowManager _instance = new WindowManager();
+        private static readonly Lazy<WindowManager> lazy =
+                new Lazy<WindowManager>(() => new WindowManager());
         public static WindowManager Instance
         {
             get
             {
-                return _instance;
+                return lazy.Value;
             }
         }
-
-        static WindowManager() {  }
 
         public WindowManager()
         {
@@ -64,7 +64,7 @@ namespace SocialNetworkGraph.WindowUtils
             }
             else
             {
-                ExceptionLogger.Instance.LogFile("Cannot minimize/normalize child windows, skip!");
+                ExceptionLogger.Instance.LogFile("Warning: cannot minimize/normalize child windows, skip!");
                 return;
             }
             foreach (var window in _windows)

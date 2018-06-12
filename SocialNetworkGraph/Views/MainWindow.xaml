@@ -84,17 +84,9 @@
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                                  Path="Source.(graphsharp:GraphCanvas.Y)" />
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                 Path="Source.ActualWidth" />
-                                            <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                 Path="Source.ActualHeight" />
-                                            <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                                  Path="Target.(graphsharp:GraphCanvas.X)" />
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                                  Path="Target.(graphsharp:GraphCanvas.Y)" />
-                                            <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                 Path="Target.ActualWidth" />
-                                            <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                 Path="Target.ActualHeight" />
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                                  Path="RoutePoints" />
                                         </MultiBinding>

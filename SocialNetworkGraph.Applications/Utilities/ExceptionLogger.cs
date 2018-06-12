@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SocialNetworkGraph.Utilities
 {
-    public class ExceptionLogger : IDisposable
+    public sealed class ExceptionLogger : IDisposable
     {
         private class ExceptionInfo
         {
@@ -20,20 +21,22 @@ namespace SocialNetworkGraph.Utilities
 
             public override string ToString()
             {
-                return string.Format("{0:HH:mm:ss}: {1}", Date, Message);
+                return string.Format("{0:HH:mm:ss}: {1}\r\n", Date, Message);
             }
         }
 
-        private static readonly ExceptionLogger _instance = new ExceptionLogger();
-        private static BlockingCollection<ExceptionInfo> _exceptions = new BlockingCollection<ExceptionInfo>();
-        private readonly Task _writerTask = Task.Run(()=>Writer());
+        private static readonly Lazy<ExceptionLogger> lazy =
+                new Lazy<ExceptionLogger>(() => new ExceptionLogger());
+        private BlockingCollection<ExceptionInfo> _exceptions = new BlockingCollection<ExceptionInfo>();
+        private readonly Task _writerTask;
 
         public void LogFile(string message)
         {
-            _exceptions.Add(new ExceptionInfo(message, DateTime.Now));
+            string messageWithoutEmptyLines = Regex.Replace(message, @"^\s+$[\r\n]*", "", RegexOptions.Multiline);
+            _exceptions.Add(new ExceptionInfo(messageWithoutEmptyLines, DateTime.Now));
         }
 
-        private static void Writer()
+        private void Writer()
         {
                 string directory = Path.Combine(Directory.GetCurrentDirectory(), "Logs\\");
 
@@ -58,21 +61,16 @@ namespace SocialNetworkGraph.Utilities
             _exceptions.CompleteAdding();
         }
 
-        static ExceptionLogger()
-        {
-
-        }
-
         private ExceptionLogger()
         {
-
+            _writerTask = Task.Run(() => Writer());
         }
 
         public static ExceptionLogger Instance
         {
             get
             {
-                return _instance;
+                return lazy.Value;
             }
         }
 

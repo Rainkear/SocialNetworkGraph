@@ -36,7 +36,8 @@ namespace SocialNetworkGraph.Utilities
             }
             catch (Exception ex)
             {
-                throw new Exception("Get persons list error: " + ex.Message);
+                ExceptionLogger.Instance.LogFile(ex.ToString());
+                throw new Exception("Get persons list error: " + ex.Message, ex);
             }
         }
 
@@ -64,7 +65,8 @@ namespace SocialNetworkGraph.Utilities
             }
             catch (Exception ex)
             {
-                throw new Exception("Get person by id exception: " + ex.Message);
+                ExceptionLogger.Instance.LogFile(ex.ToString());
+                throw new Exception("Get person by id exception: " + ex.Message, ex);
             }
         }
 
@@ -89,10 +91,11 @@ namespace SocialNetworkGraph.Utilities
             }
             catch (Exception ex)
             {
-                if(ex.InnerException != null)
-                    throw new Exception("Session factory exception: " + ex.Message + "\r\n" + ex.InnerException.Message);
+                ExceptionLogger.Instance.LogFile(ex.ToString());
+                if (ex.InnerException != null)
+                    throw new Exception("Session factory exception: " + ex.Message + "\r\n" + ex.InnerException.Message, ex);
                 else
-                    throw new Exception("Session factory exception: " + ex.Message);
+                    throw new Exception("Session factory exception: " + ex.Message, ex);
             }
         }
     }

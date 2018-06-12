@@ -26,7 +26,7 @@ namespace SocialNetworkGraph
             }
             catch (Exception ex)
             {
-                ExceptionLogger.Instance.LogFile(ex.Message);
+                ExceptionLogger.Instance.LogFile(ex.ToString());
                 Debug.WriteLine(ex);
             }
         }

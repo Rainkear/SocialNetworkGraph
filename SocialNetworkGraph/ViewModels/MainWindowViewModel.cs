@@ -4,6 +4,7 @@ using SocialNetworkGraph.Models;
 using SocialNetworkGraph.Utilities;
 using System;
 using System.Linq;
+using System.Threading;
 
 namespace SocialNetworkGraph.ViewModels
 {
@@ -102,7 +103,7 @@ namespace SocialNetworkGraph.ViewModels
             }
             catch (Exception ex)
             {
-                ExceptionLogger.Instance.LogFile(ex.Message);
+                ExceptionLogger.Instance.LogFile(ex.ToString());
                 ErrorMessage = ex.Message;
             }
         }
@@ -128,9 +129,17 @@ namespace SocialNetworkGraph.ViewModels
             }
             catch(Exception ex)
             {
-                ExceptionLogger.Instance.LogFile(ex.Message);
+                ExceptionLogger.Instance.LogFile(ex.ToString());
                 ErrorMessage = ex.Message;
+                Timer exitTimer = new Timer(ExceptionExit, null, 10000, Timeout.Infinite);
             }
         }
+
+        private void ExceptionExit(object state)
+        {
+            Environment.Exit(1);
+        }
+
+
     }
 }
